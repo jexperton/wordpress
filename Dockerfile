@@ -42,8 +42,6 @@ RUN echo -e "\
 
 RUN echo -e "#!/bin/sh\n\
     openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/zeit.key -out /etc/ssl/zeit.crt -subj \"/C=US/ST=Denial/L=Springfield/O=Dis/CN=*\" &> /dev/null \n\
-    sed -i \"s/^User .*/User www-data/g\" /etc/apache2/httpd.conf\n\
-    sed -i \"s/^Group .*/Group www-data/g\" /etc/apache2/httpd.conf\n\
     sed -i \"s/^user = .*/user = www-data/g\" /etc/php7/php-fpm.d/www.conf\n\
     sed -i \"s/^group = .*/group = www-data/g\" /etc/php7/php-fpm.d/www.conf\n\
     sed -i \"s/^memory_limit = .*/memory_limit = \${MEMORY_LIMIT:-128M}/g\" /etc/php7/php.ini\n\
@@ -52,7 +50,7 @@ RUN echo -e "#!/bin/sh\n\
     sed -i \"s/^post_max_size = .*/post_max_size = \${UPLOAD_MAX_FILESIZE:-16M}/g\" /etc/php7/php.ini\n\
     sed -i \"s/^display_errors = .*/display_errors = \${DISPLAY_ERRORS:-Off}/g\" /etc/php7/php.ini\n\
     sed -i \"s/^display_startup_errors = .*/display_startup_errors = \${DISPLAY_ERRORS:-Off}/g\" /etc/php7/php.ini\n\
-    #/usr/bin/memcached -u memcached -d\n\
+    /usr/bin/memcached -u memcached -d\n\
     /usr/sbin/php-fpm7\n\
     /usr/sbin/httpd\n\
     tail -f /var/log/apache2/access.log\
