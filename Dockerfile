@@ -5,7 +5,10 @@ ARG MAX_EXECUTION_TIME
 ARG UPLOAD_MAX_FILESIZE
 ARG DISPLAY_ERRORS
 
-RUN apk add --update --no-cache apache2-ssl memcached
+RUN apk add --update --no-cache apache2-ssl \
+    memcached \
+    php7-opcache@php \
+    php7-memcached@php
 
 RUN echo -e "\
     env[DB_HOST] = \$DB_HOST\n\
