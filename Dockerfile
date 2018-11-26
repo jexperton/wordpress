@@ -10,7 +10,7 @@ ARG MAX_EXECUTION_TIME
 ARG UPLOAD_MAX_FILESIZE
 ARG DISPLAY_ERRORS
 
-RUN apk add --update --no-cache apache2-ssl \
+RUN apk add --update --no-cache unzip \
     php7-opcache@php \
     php7-memcached@php \
     zlib
@@ -23,7 +23,6 @@ RUN echo -e "\
     env[DB_PASSWORD] = \$DB_PASSWORD" >> /etc/php7/php-fpm.d/www.conf
 
 RUN echo -e "#!/bin/sh\n\
-    openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/zeit.key -out /etc/ssl/zeit.crt -subj \"/C=US/ST=Denial/L=Springfield/O=Dis/CN=*\" &> /dev/null \n\
     sed -i \"s/^user = .*/user = www-data/g\" /etc/php7/php-fpm.d/www.conf\n\
     sed -i \"s/^group = .*/group = www-data/g\" /etc/php7/php-fpm.d/www.conf\n\
     sed -i \"s/^memory_limit = .*/memory_limit = \${MEMORY_LIMIT:-128M}/g\" /etc/php7/php.ini\n\
@@ -36,7 +35,7 @@ RUN echo -e "#!/bin/sh\n\
     /usr/sbin/httpd\n\
     tail -f /var/log/apache2/access.log\
     " > /run.sh
-
-EXPOSE 443
+    
+EXPOSE 80
 
 CMD ["/run.sh"]
