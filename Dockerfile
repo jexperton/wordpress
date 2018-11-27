@@ -11,6 +11,7 @@ RUN apk add --update --no-cache apache2-ssl \
     php7-memcached@php
 
 RUN echo -e "\
+    env[DOMAIN] = \$DOMAIN\n\
     env[DB_HOST] = \$DB_HOST\n\
     env[DB_NAME] = \$DB_NAME\n\
     env[DB_USER] = \$DB_USER\n\
