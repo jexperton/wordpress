@@ -11,7 +11,6 @@ ARG UPLOAD_MAX_FILESIZE
 ARG DISPLAY_ERRORS
 
 RUN apk add --update --no-cache apache2-ssl \
-    memcached \
     php7-opcache@php \
     php7-memcached@php
 
@@ -59,7 +58,6 @@ RUN echo -e "#!/bin/sh\n\
     sed -i \"s/^post_max_size = .*/post_max_size = \${UPLOAD_MAX_FILESIZE:-16M}/g\" /etc/php7/php.ini\n\
     sed -i \"s/^display_errors = .*/display_errors = \${DISPLAY_ERRORS:-Off}/g\" /etc/php7/php.ini\n\
     sed -i \"s/^display_startup_errors = .*/display_startup_errors = \${DISPLAY_ERRORS:-Off}/g\" /etc/php7/php.ini\n\
-    /usr/bin/memcached -u memcached -d\n\
     /usr/sbin/php-fpm7\n\
     /usr/sbin/httpd\n\
     tail -f /var/log/apache2/access.log\
