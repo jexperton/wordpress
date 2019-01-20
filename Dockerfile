@@ -13,6 +13,8 @@ ARG DISPLAY_ERRORS
 RUN apk add --update --no-cache apache2-ssl \
     php7-opcache@php \
     php7-memcached@php \
+    mysql \
+    mysql-client \
     zlib
 
 RUN echo -e "\

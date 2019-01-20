@@ -6,5 +6,5 @@ jobs:
     - stage: build docker image
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker build -t $DOCKER_USERNAME/wordpress:7.2-ssl .
-      - docker push $DOCKER_USERNAME/wordpress:7.2-ssl
+      - docker build -t $DOCKER_USERNAME/wordpress:7.2-lamp .
+      - docker push $DOCKER_USERNAME/wordpress:7.2-lamp
