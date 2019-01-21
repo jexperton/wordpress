@@ -15,12 +15,15 @@ RUN apk add --update --no-cache apache2-ssl \
     php7-memcached@php \
     mysql \
     mysql-client \
+    phpmyadmin \
     zlib
 
 COPY ssl.conf /etc/apache2/conf.d/ssl.conf
 COPY run.sh /run.sh
 
 RUN chown -R www-data:www-data /etc/phpmyadmin && \ 
+    echo "Require all granted" > /usr/share/webapps/phpmyadmin/.htaccess && \
+    ln -s /usr/share/webapps/phpmyadmin /var/www/html/phpmyadmin && \
     mkdir -p /run/mysqld && \
     chmod +x /run.sh
 
